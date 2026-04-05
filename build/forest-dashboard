@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forest Dashboard | EcoVision India</title>
+
+    <link rel="stylesheet" href="/static/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+</head>
+<body>
+
+    <div class="dashboard-page">
+
+        <div class="dashboard-topbar">
+            <a href="/states" class="back-btn">← Back to States</a>
+        </div>
+
+        <div class="dashboard-header forest-header">
+            <h1>Forest Cover Dashboard</h1>
+            <p>
+                Explore forest cover percentage, forest distribution, and region-wise green resource analysis across states.
+            </p>
+
+            
+        </div>
+
+        <div class="dashboard-main">
+            <div class="dashboard-card">
+                <tableau-viz
+                    id="forestViz"
+                    src="https://public.tableau.com/views/dashboard-2_17746514857850/Dashboard1?:showVizHome=no"
+                    toolbar="bottom"
+                    hide-tabs
+                    width="100%"
+                    height="900">
+                </tableau-viz>
+            </div>
+        </div>
+
+        <div class="dashboard-actions">
+            <a href="/environmental-dashboard" class="action-btn secondary-btn">
+                🌍 Go to Environmental Dashboard
+            </a>
+
+            <a href="/alerts" class="action-btn primary-btn">
+                🚨 Go to Alert Page
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>

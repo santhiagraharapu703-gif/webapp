@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVision India | Login</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="login-page">
+        <div class="login-overlay"></div>
+
+        <div class="login-card">
+            <div class="login-header">
+                <div class="mini-logo">
+                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EcoVision Logo">
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Login to access the environmental analytics platform</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form id="loginForm" method="POST" action="{{ url_for('login') }}" autocomplete="off">
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required autocomplete="off">
+                    <small class="error-text" id="emailError"></small>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="new-password">
+                        <button type="button" class="toggle-password" id="togglePassword">Show</button>
+                    </div>
+                    <small class="error-text" id="passwordError"></small>
+                </div>
+
+                <button type="submit" class="login-button" id="loginButton">Login</button>
+            </form>
+
+            <div class="bottom-links">
+                <a href="{{ url_for('signup') }}">Don’t have an account? Sign Up</a>
+            </div>
+
+            <div class="bottom-links">
+                <a href="{{ url_for('home') }}">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='javascript/login.js') }}"></script>
+</body>
+</html>

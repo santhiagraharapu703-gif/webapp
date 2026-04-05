@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(180deg, #eef5f1 0%, #e9f0ed 100%);
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+/* Main page wrapper */
+.page-wrapper {
+    width: 100%;
+    padding: 22px 22px 40px;
+}
+
+/* Top button area */
+.top-action-bar {
+    margin-bottom: 22px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.top-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: #f8faf9;
+    color: #173b2d;
+    padding: 16px 28px;
+    border-radius: 18px;
+    border: 1px solid #d7e4dd;
+    font-size: 17px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.top-btn:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.10);
+}
+
+/* Hero banner */
+.hero-banner {
+    width: 100%;
+    max-width: 1640px;
+    margin: 0 auto 28px;
+    padding: 52px 30px;
+    border-radius: 34px;
+    text-align: center;
+    background: linear-gradient(135deg, #123d32 0%, #198754 55%, #43b581 100%);
+    color: #ffffff;
+    box-shadow: 0 14px 34px rgba(18, 61, 50, 0.20);
+}
+
+.hero-banner h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    line-height: 1.2;
+}
+
+.hero-banner p {
+    font-size: 17px;
+    font-weight: 500;
+    max-width: 980px;
+    margin: 0 auto;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.94);
+}
+
+/* Dashboard section */
+.dashboard-container {
+    width: 100%;
+    max-width: 1640px;
+    margin: 0 auto;
+}
+
+.dashboard-frame {
+    background: #f3f1f4;
+    border-radius: 34px;
+    padding: 22px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e4e7ea;
+    overflow: hidden;
+}
+
+/* Tableau embed */
+tableau-viz {
+    width: 100%;
+    min-height: 860px;
+    border-radius: 20px;
+    overflow: hidden;
+    display: block;
+}
+
+/* Bottom buttons */
+.bottom-actions {
+    max-width: 1640px;
+    margin: 30px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.bottom-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    min-width: 230px;
+    padding: 18px 30px;
+    border-radius: 18px;
+    font-size: 17px;
+    font-weight: 800;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.secondary-btn {
+    background: #f8faf9;
+    color: #1a442f;
+    border: 1px solid #d7e4dd;
+}
+
+.secondary-btn:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.10);
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #0b4a34 0%, #0d5b40 100%);
+    color: #ffffff;
+    border: 1px solid transparent;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px rgba(11, 74, 52, 0.22);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .hero-banner h1 {
+        font-size: 40px;
+    }
+
+    .hero-banner p {
+        font-size: 16px;
+    }
+
+    tableau-viz {
+        min-height: 780px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-wrapper {
+        padding: 16px 14px 30px;
+    }
+
+    .hero-banner {
+        padding: 40px 22px;
+        border-radius: 24px;
+    }
+
+    .hero-banner h1 {
+        font-size: 30px;
+    }
+
+    .hero-banner p {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .dashboard-frame {
+        padding: 14px;
+        border-radius: 22px;
+    }
+
+    tableau-viz {
+        min-height: 650px;
+        border-radius: 14px;
+    }
+
+    .bottom-actions {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .bottom-btn,
+    .top-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-banner h1 {
+        font-size: 26px;
+    }
+
+    .hero-banner p {
+        font-size: 14px;
+    }
+
+    tableau-viz {
+        min-height: 560px;
+    }
+}

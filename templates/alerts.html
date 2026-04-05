@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVision India | Environmental Alerts</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='alerts-page.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="alert-navbar">
+        <div class="logo-section">
+            <div class="logo-circle">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EcoVision Logo">
+            </div>
+            <div class="logo-text">
+                <h2>EcoVision India</h2>
+                <span>Environmental Analytics Platform</span>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('states') }}">States</a>
+            <a href="{{ url_for('alerts') }}" class="active">Alerts</a>
+        </nav>
+    </header>
+
+    <section class="alert-hero">
+        <div class="alert-hero-overlay"></div>
+        <div class="alert-hero-content">
+            <p class="hero-subtitle">Smart Warning & Recommendation System</p>
+            <h1>Environmental Alert Center</h1>
+            <p class="hero-description">
+                Monitor critical environmental conditions using alert-based analysis.
+                This page highlights important environmental alert situations and supports
+                better decision-making through a professional alert system.
+            </p>
+        </div>
+    </section>
+
+    <section class="alert-summary-section">
+        <div class="summary-card critical">
+            <span class="summary-label">Critical Alerts</span>
+            <h3>{{ summary.critical }}</h3>
+            <p>Immediate environmental action required</p>
+        </div>
+
+        <div class="summary-card warning">
+            <span class="summary-label">Warning Alerts</span>
+            <h3>{{ summary.warning }}</h3>
+            <p>Moderate risk conditions detected</p>
+        </div>
+
+        <div class="summary-card safe">
+            <span class="summary-label">Safe Indicators</span>
+            <h3>{{ summary.safe }}</h3>
+            <p>Stable and manageable environmental conditions</p>
+        </div>
+    </section>
+
+    <section class="alert-search-section">
+        <div class="alert-search-box">
+            <div class="search-left">
+                <h2>Check State Alert Status</h2>
+                <p>Enter a state name to review environmental conditions and suggested actions.</p>
+            </div>
+
+            <div class="search-right">
+                <input type="text" id="stateSearch" placeholder="Enter state name" list="stateSuggestions">
+                <datalist id="stateSuggestions">
+                    {% for state in states %}
+                    <option value="{{ state }}">
+                    {% endfor %}
+                </datalist>
+                <button type="button" onclick="checkAlert()">Check Alert</button>
+            </div>
+        </div>
+
+        <div id="stateAlertResult" class="state-alert-result">
+            <div class="result-placeholder">
+                Select or type a state name to view environmental alert information.
+            </div>
+        </div>
+    </section>
+
+    <section class="alert-cards-section">
+        <div class="section-title">
+            <h2>Alert Categories</h2>
+            <p>Three important environmental alerts used in this project.</p>
+        </div>
+
+        <div class="alert-grid">
+            <div class="alert-card red-card">
+                <div class="alert-badge critical-badge">Critical</div>
+                <h3>High Pollution Alert</h3>
+                <p><strong>Condition:</strong> AQI &gt; 200</p>
+                <p>
+                    <strong>Alert Message:</strong>
+                    High Pollution Alert: The air quality in this state has crossed the safe limit.
+                    Immediate pollution control measures such as reducing vehicle emissions and industrial
+                    pollution are recommended to protect environmental and public health.
+                </p>
+                <p><strong>Purpose:</strong> Helps authorities quickly identify highly polluted states and take action.</p>
+            </div>
+
+            <div class="alert-card green-card">
+                <div class="alert-badge lowforest-badge">Forest Risk</div>
+                <h3>Forest Improvement Alert</h3>
+                <p><strong>Condition:</strong> Forest Cover &lt; 15%</p>
+                <p>
+                    <strong>Alert Message:</strong>
+                    Forest Improvement Alert: The forest cover in this state is below the recommended level.
+                    Increasing tree plantation and developing green zones are necessary to improve
+                    environmental balance and reduce pollution impact.
+                </p>
+                <p><strong>Purpose:</strong> Encourages increasing forest cover to reduce pollution and improve environmental sustainability.</p>
+            </div>
+
+            <div class="alert-card orange-card">
+                <div class="alert-badge combined-badge">Combined Risk</div>
+                <h3>Environmental Risk Alert</h3>
+                <p><strong>Condition:</strong> AQI high and Forest Cover low</p>
+                <p>
+                    <strong>Alert Message:</strong>
+                    Environmental Risk Alert: This state has been identified with high pollution levels
+                    and low forest cover. Immediate environmental action, including plantation programs
+                    and emission control measures, is strongly recommended to reduce ecological risk.
+                </p>
+                <p><strong>Purpose:</strong> Identifies combined environmental risks and supports decision-making for environmental improvement.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="alert-footer">
+        <p>© 2026 EcoVision India | Environmental Alert & Action System</p>
+    </footer>
+
+    <div id="emailPopup" class="popup-overlay">
+        <div class="popup-box">
+            <h3>Email Notification</h3>
+            <p id="popupMessage"></p>
+            <button class="close-btn" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <script>
+        let currentAlertData = null;
+
+        function formatNumber(value) {
+            if (value === null || value === undefined || value === "N/A") {
+                return "N/A";
+            }
+
+            const num = Number(value);
+
+            if (isNaN(num)) {
+                return value;
+            }
+
+            return num.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function escapeHtml(text) {
+            if (text === null || text === undefined) return "";
+            return String(text)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function getSeverityBadgeClass(severity) {
+            const map = {
+                critical: "mini-badge critical-mini",
+                forest: "mini-badge forest-mini",
+                combined: "mini-badge combined-mini",
+                safe: "mini-badge safe-mini",
+                warning: "mini-badge warning-mini"
+            };
+            return map[severity] || "mini-badge neutral-mini";
+        }
+
+        function getResultClass(severity) {
+            const classMap = {
+                critical: "critical-result",
+                warning: "warning-result",
+                forest: "forest-result",
+                combined: "combined-result",
+                safe: "safe-result",
+                neutral: "neutral-result"
+            };
+            return classMap[severity] || "neutral-result";
+        }
+
+        function buildAlertsList(allAlerts) {
+            if (!allAlerts || !Array.isArray(allAlerts) || allAlerts.length === 0) {
+                return `
+                    <div class="alert-list-wrap">
+                        <h4>Triggered Alerts</h4>
+                        <div class="mini-alert-card neutral-mini-card">
+                            <div class="mini-alert-header">
+                                <span class="mini-badge neutral-mini">No Alerts</span>
+                            </div>
+                            <p>No alert details available.</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const alertCards = allAlerts.map(alert => `
+                <div class="mini-alert-card">
+                    <div class="mini-alert-header">
+                        <span class="${getSeverityBadgeClass(alert.severity)}">${escapeHtml(alert.title)}</span>
+                    </div>
+                    <p><strong>Status:</strong> ${escapeHtml(alert.message || "No status available.")}</p>
+                    <p><strong>Recommended Action:</strong> ${escapeHtml(alert.action || "No action available.")}</p>
+                </div>
+            `).join("");
+
+            return `
+                <div class="alert-list-wrap">
+                    <h4>Triggered Alerts</h4>
+                    <div class="mini-alert-grid">
+                        ${alertCards}
+                    </div>
+                </div>
+            `;
+        }
+
+        function showPopup(message) {
+            const popup = document.getElementById("emailPopup");
+            const popupMessage = document.getElementById("popupMessage");
+            popupMessage.innerHTML = message;
+            popup.style.display = "flex";
+        }
+
+        async function checkAlert() {
+            const state = document.getElementById("stateSearch").value.trim();
+            const resultBox = document.getElementById("stateAlertResult");
+            currentAlertData = null;
+
+            if (!state) {
+                resultBox.innerHTML = `
+                    <div class="result-box neutral-result">
+                        <h3>No State Entered</h3>
+                        <p>Please enter a state name to check alert status.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            resultBox.innerHTML = `
+                <div class="result-box neutral-result">
+                    <h3>Checking Alert Status...</h3>
+                    <p>Please wait while environmental indicators are being analyzed.</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`/api/check-alert?state_name=${encodeURIComponent(state)}`);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || `HTTP ${response.status}`);
+                }
+
+                currentAlertData = data;
+
+                const resultClass = getResultClass(data.severity);
+                const alertsListHtml = buildAlertsList(data.all_alerts);
+
+                let emailButtonHtml = "";
+                if (data.needs_email) {
+                    emailButtonHtml = `
+                        <div class="email-action-wrap">
+                            <button class="send-alert-main-btn" onclick="sendCurrentAlertEmail()">
+                                Send Alert Email
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    emailButtonHtml = `
+                        <div class="safe-message-box">
+                            No email alert is required for this state.
+                        </div>
+                    `;
+                }
+
+                resultBox.innerHTML = `
+                    <div class="result-box ${resultClass}">
+                        <h3>${escapeHtml(data.title || "Alert Status")}</h3>
+                        <p><strong>State:</strong> ${escapeHtml(data.state_name || "N/A")}</p>
+                        <p><strong>Year:</strong> ${escapeHtml(data.year ?? "N/A")}</p>
+                        <p><strong>AQI:</strong> ${formatNumber(data.aqi)}</p>
+                        <p><strong>Forest Cover %:</strong> ${formatNumber(data.forest_cover)}</p>
+                        <p><strong>CO₂ Emissions:</strong> ${formatNumber(data.co2)}</p>
+                        <p><strong>Risk Score:</strong> ${formatNumber(data.risk_score)}</p>
+                        <p><strong>Main Status:</strong> ${escapeHtml(data.message || "No status available.")}</p>
+                        <p><strong>Main Recommended Action:</strong> ${escapeHtml(data.action || "No action available.")}</p>
+
+                        ${alertsListHtml}
+                        ${emailButtonHtml}
+                    </div>
+                `;
+            } catch (error) {
+                console.error("Check Alert Error:", error);
+                resultBox.innerHTML = `
+                    <div class="result-box neutral-result">
+                        <h3>Error</h3>
+                        <p>Unable to fetch alert data right now.</p>
+                        <p>${escapeHtml(error.message)}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function sendCurrentAlertEmail() {
+            if (!currentAlertData) {
+                showPopup("Please check a state alert first.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/send-alert-email", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        state_name: currentAlertData.state_name
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === "success") {
+                    const alertNames = Array.isArray(data.alerts_sent) && data.alerts_sent.length
+                        ? data.alerts_sent.join(", ")
+                        : currentAlertData.title;
+
+                    showPopup(`
+                        <strong>Alert Email Sent Successfully</strong><br><br>
+                        State: <strong>${escapeHtml(currentAlertData.state_name)}</strong><br>
+                        Alerts Sent: <strong>${escapeHtml(alertNames)}</strong>
+                    `);
+                } else if (data.status === "info") {
+                    showPopup(`
+                        <strong>No Email Required</strong><br><br>
+                        ${escapeHtml(data.message || "No email is required for this state.")}
+                    `);
+                } else {
+                    showPopup(`
+                        <strong>Email Sending Failed</strong><br><br>
+                        ${escapeHtml(data.message || "Unable to send alert email.")}
+                    `);
+                }
+            } catch (error) {
+                console.error("Send Email Error:", error);
+                showPopup(`
+                    <strong>Email Service Error</strong><br><br>
+                    Unable to connect to email service.
+                `);
+            }
+        }
+
+        document.getElementById("stateSearch").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkAlert();
+            }
+        });
+
+        function closePopup() {
+            document.getElementById("emailPopup").style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const popup = document.getElementById("emailPopup");
+            if (event.target === popup) {
+                popup.style.display = "none";
+            }
+        };
+    </script>
+
+</body>
+</html>

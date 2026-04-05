@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ dashboard.title }}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+
+<h1 style="text-align:center;">{{ dashboard.title }}</h1>
+
+<p style="text-align:center;">{{ dashboard.description }}</p>
+
+<div style="text-align:center; margin-top:20px;">
+    <img src="{{ url_for('static', filename=dashboard.image) }}" width="600">
+</div>
+
+<br>
+
+<div style="text-align:center;">
+    <a href="{{ url_for('alerts') }}" class="alert-btn">Send to Alert</a>
+</div>
+
+</body>
+</html>

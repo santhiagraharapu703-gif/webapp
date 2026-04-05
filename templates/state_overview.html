@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVision India | States Overview</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='stateoverview.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo-section">
+            <div class="logo-circle">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EcoVision Logo">
+            </div>
+            <div class="logo-text">
+                <h2>EcoVision India</h2>
+                <span>Environmental Analytics Platform</span>
+            </div>
+        </div>
+
+        <!-- ✅ CLEAN NAVBAR -->
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('states') }}" class="active">States</a>
+            <a href="{{ url_for('alerts') }}">Alerts</a>
+        </nav>
+    </header>
+
+    <section class="states-hero">
+        <div class="states-hero-content">
+            <p class="subtitle">Explore India State-wise Environmental Data</p>
+            <h1>States Overview</h1>
+            <p class="description">
+                View all Indian states in a professional card layout.
+                Click on any state card to open the details page.
+            </p>
+        </div>
+    </section>
+
+    <section class="states-section">
+        <div class="section-top">
+            <div>
+                <h2>All States</h2>
+                <p>Browse all state cards and open detailed environmental insights.</p>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search state name...">
+            </div>
+        </div>
+
+        <div id="statesGrid" class="states-grid"></div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2026 EcoVision India | State-wise Environmental Overview</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='javascript/overview.js') }}"></script>
+</body>
+</html>

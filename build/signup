@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoVision India | Sign Up</title>
+
+    <link rel="stylesheet" href="/static/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="login-page">
+        <div class="login-overlay"></div>
+
+        <div class="login-card">
+            <div class="login-header">
+                <div class="mini-logo">
+                    <img src="/static/images/logo.jpg" alt="EcoVision Logo">
+                </div>
+                <h1>Create Account</h1>
+                <p>Sign up to access the environmental analytics platform</p>
+            </div>
+
+            
+                
+            
+
+            <form method="POST" action="/signup" autocomplete="off">
+                <div class="input-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="signupPassword">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="signupPassword" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('signupPassword', this)">Show</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirmPassword" name="confirm_password" placeholder="Confirm your password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword', this)">Show</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-button">Sign Up</button>
+            </form>
+
+            <div class="bottom-links">
+                <a href="/login">Already have an account? Login</a>
+            </div>
+
+            <div class="bottom-links">
+                <a href="/">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                btn.textContent = "Hide";
+            } else {
+                input.type = "password";
+                btn.textContent = "Show";
+            }
+        }
+    </script>
+
+</body>
+</html>

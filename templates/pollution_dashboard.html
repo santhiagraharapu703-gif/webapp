@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollution Dashboard | EcoVision India</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tableau API -->
+    <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+</head>
+<body>
+
+    <div class="dashboard-page">
+
+        <!-- BACK -->
+        <div class="dashboard-topbar">
+            <a href="{{ url_for('states') }}" class="back-btn">← Back to States</a>
+        </div>
+
+        <!-- HEADER -->
+        <div class="dashboard-header pollution-header">
+            <h1>Pollution Analysis Dashboard</h1>
+            <p>
+                View AQI levels, carbon emissions, pollution trends, and environmental risk insights.
+            </p>
+
+            {% if state_name %}
+            <div class="selected-state-badge">
+                Selected State: {{ state_name }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- DASHBOARD -->
+        <div class="dashboard-main">
+            <div class="dashboard-card">
+
+                <tableau-viz
+                    id="pollutionViz"
+                    src="https://public.tableau.com/views/polllution/Dashboard1?:showVizHome=no"
+                    toolbar="bottom"
+                    hide-tabs
+                    width="100%"
+                    height="900">
+                </tableau-viz>
+
+            </div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="dashboard-actions">
+
+            <a href="{{ url_for('forest_dashboard', state_name=state_name) }}"
+               class="action-btn secondary-btn">
+                🌿 Forest Dashboard
+            </a>
+
+            <a href="{{ url_for('alerts') }}"
+               class="action-btn primary-btn">
+                🚨 Go to Alert Page
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ dashboard.title }} | EcoVision India</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo-section">
+            <div class="logo-circle">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="EcoVision Logo">
+            </div>
+            <div class="logo-text">
+                <h2>EcoVision India</h2>
+                <span>Environmental Analytics Platform</span>
+            </div>
+        </div>
+
+        <nav class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('dashboard', type=dashboard_type, state_name=state_name) }}" class="active">Dashboard</a>
+            <a href="{{ url_for('states') }}">States</a>
+            <a href="{{ url_for('alerts') }}">Alerts</a>
+        </nav>
+    </header>
+
+    <section class="dashboard-topbar">
+        <div class="dashboard-topbar-content">
+            <a href="{{ url_for('states') }}" class="back-btn">← Back to States</a>
+            <div class="dashboard-info">
+                <p class="subtitle">Dashboard View</p>
+                <h1>{{ dashboard.title }}</h1>
+                <p class="description">{{ dashboard.description }}</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="dashboard-main">
+        <div class="dashboard-card">
+            <tableau-viz
+                id="tableauViz"
+                src="https://public.tableau.com/views/{{ dashboard.tableau_view }}?:showVizHome=no"
+                toolbar="bottom"
+                hide-tabs
+                device="desktop"
+                width="100%"
+                height="1000">
+            </tableau-viz>
+        </div>
+    </main>
+
+</body>
+</html>

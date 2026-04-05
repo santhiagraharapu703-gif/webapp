@@ -1,0 +1,310 @@
+* {
+margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #eef7f1, #f8fbff);
+    color: #1f2937;
+}
+
+/* TOP BAR */
+.dashboard-topbar {
+    width: 100%;
+    padding: 18px 24px 0;
+}
+
+.back-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #ffffff;
+    color: #123524;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    border: 1px solid #dbe7df;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    transform: translateY(-2px);
+    background: #f8fffb;
+}
+
+/* PAGE WRAPPER */
+.dashboard-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 24px 40px;
+}
+
+/* HEADER */
+.dashboard-header {
+    max-width: 1500px;
+    margin: 18px auto 24px;
+    border-radius: 28px;
+    padding: 42px 30px;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    position: relative;
+    overflow: hidden;
+}
+
+.dashboard-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+}
+
+.pollution-header {
+    background: linear-gradient(135deg, #0f172a, #1d4ed8, #2563eb);
+}
+
+.forest-header {
+    background: linear-gradient(135deg, #14532d, #15803d, #22c55e);
+}
+
+.dashboard-header h1 {
+    position: relative;
+    z-index: 1;
+    font-size: 38px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: 0.2px;
+}
+
+.dashboard-header p {
+    position: relative;
+    z-index: 1;
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.96);
+}
+
+.selected-state-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    margin-top: 18px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(8px);
+}
+
+/* MAIN AREA */
+.dashboard-main {
+    width: 100%;
+    padding: 0;
+}
+
+.dashboard-card {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 18px;
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.10);
+    border: 1px solid rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+}
+
+/* TABLEAU */
+tableau-viz {
+    width: 100% !important;
+    min-height: 920px !important;
+    display: block;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+/* ACTION BUTTONS */
+.dashboard-actions {
+    max-width: 1500px;
+    margin: 28px auto 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.primary-btn {
+    background: #123524;
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(18, 53, 36, 0.20);
+}
+
+.primary-btn:hover {
+    background: #0d271b;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background: #ffffff;
+    color: #123524;
+    border: 1px solid #d8e5dc;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+}
+
+.secondary-btn:hover {
+    background: #f8fffb;
+    transform: translateY(-2px);
+}
+
+/* OPTIONAL SMALL INFO STRIP */
+.dashboard-note {
+    max-width: 1500px;
+    margin: 0 auto 16px;
+    padding: 14px 18px;
+    background: #ecfdf5;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .dashboard-header h1 {
+        font-size: 34px;
+    }
+
+    tableau-viz {
+        min-height: 860px !important;
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-page {
+        padding: 0 16px 32px;
+    }
+
+    .dashboard-topbar {
+        padding: 16px 16px 0;
+    }
+
+    .dashboard-header {
+        padding: 34px 22px;
+        border-radius: 22px;
+        margin-top: 16px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 30px;
+    }
+
+    .dashboard-header p {
+        font-size: 15px;
+    }
+
+    .dashboard-card {
+        padding: 10px;
+        border-radius: 18px;
+    }
+
+    tableau-viz {
+        min-height: 780px !important;
+    }
+
+    .action-btn {
+        padding: 13px 20px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-page {
+        padding: 0 12px 28px;
+    }
+
+    .dashboard-topbar {
+        padding: 14px 12px 0;
+    }
+
+    .back-btn {
+        font-size: 13px;
+        padding: 9px 14px;
+    }
+
+    .dashboard-header {
+        padding: 28px 16px;
+        border-radius: 18px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 25px;
+        line-height: 1.3;
+    }
+
+    .dashboard-header p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .selected-state-badge {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+
+    .dashboard-card {
+        padding: 6px;
+        border-radius: 14px;
+    }
+
+    tableau-viz {
+        min-height: 680px !important;
+    }
+
+    .dashboard-actions {
+        gap: 12px;
+    }
+
+    .action-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-header h1 {
+        font-size: 22px;
+    }
+
+    .dashboard-header p {
+        font-size: 13px;
+    }
+
+    tableau-viz {
+        min-height: 620px !important;
+    }
+}
